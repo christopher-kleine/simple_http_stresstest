@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  main:
+    image: plain_go_vestigo
+    build: .
+
+  test:
+    image: frapsoft/slowhttptest
+    working_dir: /test
+    volumes:
+      - ./:/test:rw
+    command: '-c 65000 -H -g -o slowhttp -i 10 -r 5000 -t GET -u http://main/plaintext -x 24 -p 3 -l 300'
